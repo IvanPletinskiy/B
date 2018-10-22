@@ -3,4 +3,34 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="divider_color">#000000</color>
+<!--
+    <color name="text_color">#FFFFFF</color>
+    <color name="color_row1">#92C94A</color>"
+    <color name="color_row2">#6F9C33</color>"
+    -->
+
+    <color name="text_color">#000000</color>
+    <color name="color_row1">#F0F0F0</color>
+    <color name="color_row2">#E0E0E0</color>
+    <color name="chart_background">#FFFFFF</color>
+    <color name="color_prihod">#F0FFF0</color>
+    <color name="color_rashod">#E0FFE0</color>
+    <color name="color_ukrali">#E0FFE0</color>
+    <color name="color_date">#E0FFFF</color>
+
+    <color name="trend_color1">#0000FF</color> <!--"blue"-->
+    <color name="trend_color2">#FF0000</color> <!--"red"-->
+    <color name="trend_color3">#00FF00</color> <!--"green"-->
+    <color name="trend_color4">#FF00FF</color> <!--"magenta"-->
+    <color name="trend_color5">#008B8B</color> <!-- "darkcyan"-->
+    <color name="trend_color6">#A0522D</color> <!-- "sienna"-->
+    <color name="trend_color7">#9400D3</color> <!-- "darkviolet"-->
+    <color name="trend_color8">#00008B</color> <!-- "darkblue"-->
+    <color name="trend_color9">#32CD32</color> <!-- "limegreen"-->
+    <color name="trend_color10">#808000</color> <!-- "olive"-->
+    <color name="trend_color11">#00FFFF</color> <!-- "cyan"-->
+    <color name="trend_color12">#FFA500</color> <!-- "orange"-->
+
 </resources>
