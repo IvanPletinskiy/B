@@ -9,18 +9,17 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-//import com.handen.handenview.dummy.DummyContent.DummyItem;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+//import com.handen.handenview.dummy.DummyContent.DummyItem;
 
 //import android.support.v7.widget.RecyclerView;
 
@@ -180,6 +179,14 @@ public class PoluchatFragment extends Fragment {
         int month = date.getMonth();
         if (month >= 0 && month < 12) {
             monthTextView.setText(mon[month] + " " + Integer.toString(date.getYear() + 1900));
+            monthTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mode = 3;
+                    updateView();
+                }
+            });
+
         }
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd");
         for (int i = 0; i < listSMS.size(); i++) {

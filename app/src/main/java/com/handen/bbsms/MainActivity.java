@@ -153,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
 
         ContentResolver cr = getContentResolver();
         if (cr != null) {
-            Cursor cur = cr.query(inboxURI, reCols, "address LIKE 'ASB.BY' ", null, "date");
+//            Cursor cur = cr.query(inboxURI, reCols, "address LIKE 'ASB.BY'", null, "date");
+            Cursor cur = cr.query(inboxURI, reCols, "address = 'ASB.BY' or address = 'ASB'", null, "date");
             if (cur != null) {
                 /*
                  * Moves to the next row in the cursor. Before the first movement in the cursor, the
