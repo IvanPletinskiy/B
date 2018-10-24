@@ -1,6 +1,7 @@
 package com.handen.bbsms;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -15,11 +16,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (database == null)
+            database = new Database (this);
 
         String appKey = "42201f8561511aed9f538eba26947d43f9788102ca72f3c7";
         Appodeal.disableLocationPermissionCheck();
@@ -190,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -200,6 +208,20 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.item_all:
+                poluchatFragment.mode = 3;
+                poluchatFragment.updateView();
+                break;
+            case R.id.item_grouped:
+                poluchatFragment.mode = 1;
+                poluchatFragment.updateView();
+                break;
+            case R.id.item_about:
+                showAbout ();
+                break;
+        }
 
         //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
@@ -265,13 +287,12 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-/*
     void fragmentComment(Database.SMS _sms) {
         final Database.SMS sms = _sms;
         final Dialog dialog = new Dialog(MainActivity.this);
 
         // Передайте ссылку на разметку
-        dialog.setContentView(R.layout.dialog_rename_or_comment);
+        dialog.setContentView(R.layout.dialog_comment);
         // Найдите элемент TextView внутри вашей разметки
         // и установите ему соответствующий текст
         String title = "Введите комментарий к этому платежу (пустое поле отменит комментарий):";
@@ -283,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
             newText.setText(comment);
         else
             newText.setText("");
-        int width = (int) (getResources().getDisplayMetrics().widthPixels);
         dialog.findViewById(R.id.buttonCansel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -296,17 +316,61 @@ public class MainActivity extends AppCompatActivity {
                 EditText newText = dialog.findViewById(R.id.inputText);
                 Database.updateComment(sms, newText.getText().toString());
                 dialog.dismiss();
+                poluchatFragment.updateView();
             }
         });
 
-        dialog.show();
+        TableLayout table = dialog.findViewById(R.id.table_comments ); // init table
+        if (table != null) {
+            table.removeAllViews();
+            table.invalidate();
+            ArrayList<String> comments = Database.getComments();
+            for (int i = 0; i < comments.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                TableRow tr = (TableRow) inflater.inflate(R.layout.fragment_row_comment, null);
+                TextView tv = tr.findViewById(R.id.col_comment);
+                tv.setText(comments.get(i));
+                if ((i % 2) == 0)
+                    tr.setBackgroundColor(ContextCompat.getColor(this, R.color.color_row1));
+                else
+                    tr.setBackgroundColor(ContextCompat.getColor(this, R.color.color_row2));
+                table.addView(tr); //добавляем созданную строку в таблицу
+            }
+            if (comments.size() == 0) {
+                TextView tv = dialog.findViewById(R.id.dialogTextView2);
+                if (tv != null)
+                    tv.setText ("");
+            }
+        }
+
+        dialog.show(); //todo Enter обрабатывать как конец ввода
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
         lp.copyFrom(dialog.getWindow().getAttributes());
+        int width = (int) (getResources().getDisplayMetrics().widthPixels);
         lp.width = width;
         dialog.getWindow().setAttributes(lp);
-    }
-*/
 
+    }
+
+    protected void showAbout() {
+        // Inflate the about message contents
+        View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+
+        // When linking text, force to always use default color. This works
+        // around a pressed color state bug.
+        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
+//        int defaultColor = textView.getTextColors().getDefaultColor();
+//        textView.setTextColor(defaultColor);
+//        textView.setTextColor(ContextCompat.getColor(this, R.color.color_rashod));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setIcon(R.drawable.ic_launcher_background);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle(R.string.app_name);
+        builder.setView(messageView);
+        builder.create();
+        builder.show();
+    }
 }

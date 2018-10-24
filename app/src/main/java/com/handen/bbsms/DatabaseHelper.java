@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "DATE TEXT," +
                 "RECEIVER TEXT," +
                 "RECEIVER_CODE INTEGER," +
-                "BALANCE REAL");
+                "BALANCE REAL)");
 
         String SQL = "create table RENAMES (ORIG TEXT UNIQUE, RENAMED TEXT)";
         db.execSQL(SQL);

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_all"
+        app:showAsAction="never"
+        android:title="@string/action_all">
+    </item>
+    <item
+        android:id="@+id/item_grouped"
+        app:showAsAction="never"
+        android:title="@string/action_grouped">
+    </item>
+    <item
+        android:id="@+id/item_about"
+        app:showAsAction="never"
+        android:title="@string/action_about">
+    </item>
+<!--
+    <item
+        android:id="@+id/item"
+        android:icon="@android:drawable/ic_menu_call"
+        app:showAsAction="ifRoom"
+        android:title="@string/app_name">
+    </item>
+    <item
+        android:id="@+id/action_calendar"
+        android:orderInCategory="100"
+        android:title="@string/action_calendar"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_taglist"
+        android:orderInCategory="100"
+        android:title="@string/action_taglist"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_step_prev"
+        android:orderInCategory="100"
+        android:title="@string/action_step_prev"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_step_next"
+        android:orderInCategory="100"
+        android:title="@string/action_step_next"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_zoom_in"
+        android:orderInCategory="100"
+        android:title="@string/action_zoom_in"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_zoom_out"
+        android:orderInCategory="100"
+        android:title="@string/action_zoom_out"
+        app:showAsAction="never"/>
+-->
+
+</menu>

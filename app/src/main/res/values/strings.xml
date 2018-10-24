@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BB SMS</string>
+    <string name="action_about">О приложении</string>
+    <string name="app_descrip">Анализатор SMS Беларусбанка. Версия 0.9</string>
+    <string name="app_credits">Handen Inc (c) 2018\nViber: +375 29 3190365\nemail: handeninc@gmail.com</string>
+    <string name="action_all">Все платежи</string>
+    <string name="action_grouped">Пталежи по получателям</string>
+
 </resources>

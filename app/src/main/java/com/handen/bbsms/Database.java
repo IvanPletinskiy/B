@@ -17,17 +17,23 @@ public class Database {
     private static Context mContext;
 //    ArrayList <String> smsList;
 
+/*
     public static void init() {
         mContext = App.getContext();
+
         if (mContext != null)
           mDatabase = new DatabaseHelper(mContext.getApplicationContext()).getWritableDatabase();
     }
+*/
 
 //    public ArrayList<String> getSMSs() {
 //        return smsList;
 //    }
 
-    private Database() {
+    public Database (Context context) {
+        mContext = context.getApplicationContext();
+        mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
+        Log.e("BBSMS", "DATABASE mDatabase=" + mDatabase.toString());
     }
 
     /*
@@ -115,6 +121,8 @@ public class Database {
     }
 
     static void updateRanames(String original, String renamed) {
+//        if (mDatabase == null)
+//            init ();
         if (mDatabase != null) {
             if (renamed.length() == 0 || original.equals(renamed))
                 mDatabase.execSQL("delete from renames where orig=" + original);
@@ -132,6 +140,8 @@ public class Database {
     }
 
     static String getRenames(String original) {
+//        if (mDatabase == null)
+//            init ();
         String ret = null;
         if (mDatabase != null) {
             String[] columns = new String[]{"RENAMED"};
@@ -164,6 +174,8 @@ public class Database {
     }
 
     static String getComment(SMS sms) {
+//        if (mDatabase == null)
+//            init ();
         String ret = "";
         if (mDatabase != null) {
             String[] columns = new String[]{"COMMENT"};
@@ -172,7 +184,7 @@ public class Database {
                 Cursor cursor = mDatabase.query(true,
                         "COMMENTS",
                         columns,
-                        "DATE=" + formatter.format(sms.date),
+                        "DATE=\"" + formatter.format(sms.date) + "\"",
                         null,
                         null,
                         null,
@@ -197,12 +209,14 @@ public class Database {
     }
 
     static void updateComment(SMS sms, String comment) {
+//        if (mDatabase == null)
+//            init ();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
         if (mDatabase != null) {
             if (comment.length() == 0)
-                mDatabase.execSQL("delete from COMMENTS where DATE=" + sms.date);
+                mDatabase.execSQL("delete from COMMENTS where DATE=\"" + formatter.format(sms.date) + "\"");
             else {
                 ContentValues initialValues = new ContentValues();
-                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
                 initialValues.put("DATE", formatter.format(sms.date)); // the execution is different if _id is 2
                 initialValues.put("COMMENT", comment);
 
@@ -212,5 +226,43 @@ public class Database {
                 }
             }
         }
+    }
+
+    static ArrayList <String> getComments () {
+//        if (mDatabase == null)
+//            init ();
+        ArrayList <String> ret = new ArrayList<>();
+        if (mDatabase != null) {
+            String[] columns = new String[]{"COMMENT", "DATE"};
+            try {
+                Cursor cursor = mDatabase.query(true,
+                        "COMMENTS",
+                        columns,
+                        null,
+                        null,
+                        null,
+                        null,
+                        "comment",
+                        null,
+                        null);
+
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            String s = cursor.getString(0);
+                            ret.add(s);
+                            s =  cursor.getString(1);
+                        } while (cursor.moveToNext());
+                    }
+                    cursor.close();
+                } else
+                    Log.d("BBB", "Cursor is null");
+
+            } catch (SQLException e) {
+                Log.e("BBB", "read Exception >>" + e.toString());
+                e.printStackTrace();
+            }
+        }
+        return ret;
     }
 }

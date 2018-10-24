@@ -48,8 +48,6 @@ public class PoluchatFragment extends Fragment {
     public PoluchatFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static PoluchatFragment newInstance() {
         PoluchatFragment fragment = new PoluchatFragment();
         Bundle args = new Bundle();
@@ -99,15 +97,17 @@ public class PoluchatFragment extends Fragment {
         table.removeAllViews();
         table.invalidate();
 
-        float rashod_byn = 0, prihod = 0, ukrali = 0, rashod_usd = 0, rashod_eur = 0;
+        float rashod_byn = 0, ukrali = 0, rashod_usd = 0, rashod_eur = 0;
+        ArrayList<Float> prihod = new ArrayList<>();
 
         for (int i = 0; i < SMSs.size(); i++) {
             if (i > 0 && SMSs.get(i).curr.equals("BYN") && SMSs.get(i - 1).curr.equals("BYN")) {
                 float realRash = SMSs.get(i - 1).balance - SMSs.get(i).balance;
                 float err = realRash - SMSs.get(i).summ;
-                if (err < 0)
-                    prihod += -err;
-                else if (err > 0) {
+                if (err < 0) {
+                    if (err < -0.01)
+                        prihod.add(-err);
+                } else if (err > 0) {
                     ukrali += err;
                 }
             }
@@ -253,7 +253,6 @@ public class PoluchatFragment extends Fragment {
                         mode = 2;
                         TableRow row = (TableRow) view;
                         if (table != null) {
-//                            TextView tv = row.findViewById(R.id.col2);
                             for (int rowNum = 0; rowNum < table.getChildCount(); rowNum++) {
                                 if (row == table.getChildAt(rowNum)) {
                                     String receiver = listSMS.get(rowNum).receiver;
@@ -263,27 +262,30 @@ public class PoluchatFragment extends Fragment {
                             }
                         }
                     }
+                    if (mode == 3 || mode == 2) {
+//todo временно отключено                        commentPay(view);
+                    }
                 }
             });
             table.addView(tr); //добавляем созданную строку в таблицу
         }
 
-        if (prihod >= 0.01 && mode != 2)
-
-        {
+        if (prihod.size() > 0 && mode != 2) {//TODO приходы опционально можно вывести на отдельном экране
+            float pr = 0;
+            for (int i = 0; i < prihod.size(); i++) {
+                pr += prihod.get(i);
+            }
             tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Приход:");
             tv.setGravity(Gravity.RIGHT);
             tv = tr.findViewById(R.id.col3);
-            tv.setText(new DecimalFormat("#0.00").format(prihod));
+            tv.setText(new DecimalFormat("#0.00").format(pr));
             tr.setBackgroundColor(ContextCompat.getColor(this.getActivity(), R.color.color_prihod));
             table.addView(tr); //добавляем созданную строку в таблицу
         }
 
-        if (rashod_byn >= 0.01)
-
-        {
+        if (rashod_byn >= 0.01) {
             tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
@@ -305,9 +307,7 @@ public class PoluchatFragment extends Fragment {
             table.addView(tr); //добавляем созданную строку в таблицу
         }
 
-        if (rashod_usd >= 0.01)
-
-        {
+        if (rashod_usd >= 0.01) {
             tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
@@ -328,9 +328,7 @@ public class PoluchatFragment extends Fragment {
             table.addView(tr); //добавляем созданную строку в таблицу
         }
 
-        if (rashod_eur >= 0.01)
-
-        {
+        if (rashod_eur >= 0.01) {
             tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
@@ -446,7 +444,6 @@ public class PoluchatFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
 //        void onListFragmentInteraction(DummyItem item);
     }
 
@@ -475,15 +472,16 @@ public class PoluchatFragment extends Fragment {
         int rowNum = -1;
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow tr = (TableRow) table.getChildAt(i);
-/*
+            if (tr == v) {
+                rowNum = i;
+                break;
+            }
             if (tr.findViewById(R.id.settings) == v) {
                 rowNum = i;
                 break;
             }
-*/
         }
 
-/*
         if (rowNum >= 0 && rowNum < listSMS.size()) {
             if (getActivity() != null) {
                 MainActivity ma = (MainActivity) getActivity();
@@ -491,7 +489,6 @@ public class PoluchatFragment extends Fragment {
                 updateView();
             }
         }
-*/
     }
 
     void renameReceiver(View v) {
