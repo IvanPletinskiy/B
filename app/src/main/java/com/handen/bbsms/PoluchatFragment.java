@@ -220,27 +220,6 @@ public class PoluchatFragment extends Fragment {
             tv = (TextView) tr.findViewById(R.id.col4);
             if (tv != null)
                 tv.setText(sms.curr);
-            if (mode == 1) {
-                TextView tvs = tr.findViewById(R.id.settings);
-                if (tvs != null) {
-                    tvs.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            renameReceiver(v);
-                        }
-                    });
-                }
-            } else if (mode == 2) {
-                TextView tvs = tr.findViewById(R.id.settings);
-                if (tvs != null) {
-                    tvs.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            commentPay(v);
-                        }
-                    });
-                }
-            }
             if ((i % 2) == 0)
                 tr.setBackgroundColor(ContextCompat.getColor(this.getActivity(), R.color.color_row1));
             else
@@ -275,7 +254,10 @@ public class PoluchatFragment extends Fragment {
             for (int i = 0; i < prihod.size(); i++) {
                 pr += prihod.get(i);
             }
-            tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            if (mode == 1)
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            else
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer_4column, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Приход:");
             tv.setGravity(Gravity.RIGHT);
@@ -286,7 +268,10 @@ public class PoluchatFragment extends Fragment {
         }
 
         if (rashod_byn >= 0.01) {
-            tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            if (mode == 1)
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            else
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer_4column, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
             tv.setGravity(Gravity.RIGHT);
@@ -308,7 +293,10 @@ public class PoluchatFragment extends Fragment {
         }
 
         if (rashod_usd >= 0.01) {
-            tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            if (mode == 1)
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            else
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer_4column, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
             tv.setGravity(Gravity.RIGHT);
@@ -329,7 +317,10 @@ public class PoluchatFragment extends Fragment {
         }
 
         if (rashod_eur >= 0.01) {
-            tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            if (mode == 1)
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            else
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer_4column, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход:");
             tv.setGravity(Gravity.RIGHT);
@@ -351,7 +342,10 @@ public class PoluchatFragment extends Fragment {
         }
 
         if (ukrali >= 0.01 && mode != 2) {
-            tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            if (mode == 1)
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer, null);
+            else
+                tr = (TableRow) inflater.inflate(R.layout.fragment_footer_4column, null);
             tv = tr.findViewById(R.id.col2);
             tv.setText("Расход без СМС:");
             tv.setGravity(Gravity.RIGHT);
@@ -473,10 +467,6 @@ public class PoluchatFragment extends Fragment {
         for (int i = 0; i < table.getChildCount(); i++) {
             TableRow tr = (TableRow) table.getChildAt(i);
             if (tr == v) {
-                rowNum = i;
-                break;
-            }
-            if (tr.findViewById(R.id.settings) == v) {
                 rowNum = i;
                 break;
             }

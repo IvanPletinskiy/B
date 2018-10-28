@@ -8,11 +8,10 @@
 
     <TextView
         android:id="@+id/col1"
-        android:gravity="center_horizontal"
-        android:paddingLeft="5dp"
-        android:paddingTop="@dimen/tablePaddingTop"
-        android:paddingRight="5dp"
         android:paddingBottom="@dimen/tablePaddingBottom"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="@dimen/tablePaddingTop"
         android:text=""
         android:textColor="@color/text_color"
         android:textSize="10sp" />
@@ -20,12 +19,11 @@
     <LinearLayout
         android:layout_width="1dp"
         android:layout_height="match_parent">
-        <!--        <View style="@style/Divider_invisible" /> -->
-        <View style="@style/Divider" />
+
+        <View style="@style/Divider_invisible" />
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/col2"
         android:paddingBottom="@dimen/tablePaddingBottom"
         android:paddingLeft="5dp"
@@ -43,16 +41,16 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/col3"
-        android:paddingLeft="5dp"
-        android:paddingTop="@dimen/tablePaddingTop"
-        android:paddingRight="5dp"
         android:paddingBottom="@dimen/tablePaddingBottom"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="@dimen/tablePaddingTop"
         android:text=""
         android:textAlignment="textEnd"
         android:textColor="@color/text_color"
         android:textSize="10sp" />
+
     <LinearLayout
         android:layout_width="1dp"
         android:layout_height="match_parent">
@@ -61,12 +59,11 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/col4"
-        android:paddingLeft="5dp"
-        android:paddingTop="@dimen/tablePaddingTop"
-        android:paddingRight="5dp"
         android:paddingBottom="@dimen/tablePaddingBottom"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="@dimen/tablePaddingTop"
         android:text=""
         android:textColor="@color/text_color"
         android:textSize="10sp" />

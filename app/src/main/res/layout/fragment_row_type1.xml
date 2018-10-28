@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/col2"
-        android:layout_width="match_parent"
         android:paddingLeft="5dp"
         android:paddingTop="@dimen/tablePaddingTop"
         android:paddingRight="5dp"
         android:paddingBottom="@dimen/tablePaddingBottom"
         android:text=""
         android:textColor="@color/text_color"
+        android:layout_weight="1"
         android:textSize="10sp" />
 
     <LinearLayout
@@ -24,6 +24,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="wrap_content"
         android:id="@+id/col3"
         android:paddingBottom="@dimen/tablePaddingBottom"
         android:paddingLeft="5dp"
@@ -32,6 +33,7 @@
         android:text=""
         android:textColor="@color/text_color"
         android:textAlignment="textEnd"
+        android:layout_weight="0"
         android:textSize="10sp" />
 
     <LinearLayout
@@ -48,26 +50,7 @@
         android:paddingTop="@dimen/tablePaddingTop"
         android:text=""
         android:textColor="@color/text_color"
+        android:layout_weight="0"
+        android:layout_width="wrap_content"
         android:textSize="10sp" />
-
-    <!--
-    <LinearLayout
-        android:layout_width="1dp"
-        android:layout_height="match_parent">
-        <View style="@style/Divider" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/settings"
-        android:paddingBottom="@dimen/tablePaddingBottom"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="@dimen/tablePaddingTop"
-        android:text="..."
-        android:textColor="@color/text_color"
-        android:textSize="16sp"
-        android:textAlignment="center"
-        />
--->
 </TableRow>
-

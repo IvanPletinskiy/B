@@ -36,6 +36,7 @@
             </intent-filter>
         </receiver>
 
+
         <activity android:name="com.appodeal.ads.InterstitialActivity"
                   android:configChanges="orientation|screenSize"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar" />

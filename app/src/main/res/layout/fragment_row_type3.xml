@@ -8,7 +8,6 @@
 
     <TextView
         android:id="@+id/col1"
-        android:layout_width="wrap_content"
         android:gravity="center_horizontal"
         android:paddingLeft="5dp"
         android:paddingTop="@dimen/tablePaddingTop"
@@ -26,6 +25,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="wrap_content"
         android:id="@+id/col2"
         android:paddingBottom="@dimen/tablePaddingBottom"
         android:paddingLeft="5dp"
@@ -43,6 +43,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="wrap_content"
         android:id="@+id/col3"
         android:paddingLeft="5dp"
         android:paddingTop="@dimen/tablePaddingTop"
@@ -61,6 +62,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="wrap_content"
         android:id="@+id/col4"
         android:paddingBottom="@dimen/tablePaddingBottom"
         android:paddingLeft="5dp"

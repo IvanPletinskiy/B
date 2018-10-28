@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2009 The Android Open Source Project
+          http://www.apache.org/licenses/LICENSE-2.0
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="2dip">
+
+    <TextView
+        android:id="@+id/help_intro"
+        android:paddingBottom="20dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/help_intro"
+        android:textColor="@color/text_color"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="1">
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:stretchColumns="0">
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row1">
+
+                    <ImageView
+                        android:id="@+id/screenshot1"
+                        android:src="@mipmap/screenshot1" />
+                </TableRow>
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="@dimen/tablePaddingTop"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="@dimen/tablePaddingBottom"
+                        android:text="@string/help_text1"
+                        android:textColor="@color/text_color"
+                        android:textSize="10sp" />
+                </TableRow>
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row2">
+
+                    <ImageView
+                        android:id="@+id/screenshot2"
+                        android:src="@mipmap/screenshot2" />
+                </TableRow>
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="@dimen/tablePaddingTop"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="@dimen/tablePaddingBottom"
+                        android:text="@string/help_text2"
+                        android:textColor="@color/text_color"
+                        android:textSize="10sp" />
+                </TableRow>
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row1">
+
+                    <ImageView
+                        android:id="@+id/screenshot3"
+                        android:src="@mipmap/screenshot3" />
+                </TableRow>
+
+                <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_row1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="@dimen/tablePaddingTop"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="@dimen/tablePaddingBottom"
+                        android:text="@string/help_text3"
+                        android:textColor="@color/text_color"
+                        android:textSize="10sp" />
+                </TableRow>
+
+            </TableLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/help_coda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="email"
+        android:paddingTop="20dip"
+        android:text="@string/help_coda"
+        android:textColor="@color/text_color"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -117,6 +117,10 @@ public class Database {
             } else {
                 result = "!slit";
             }
+            if (date == null)
+            {
+                String s = "";
+            }
         }
     }
 

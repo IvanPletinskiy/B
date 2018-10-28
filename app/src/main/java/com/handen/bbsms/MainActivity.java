@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean onCreateCalled = false;
 
     private static float ostatok = 0;
     final Context context = this;
@@ -54,15 +58,21 @@ public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<Database.SMS> getSmsList(Date date) {
         ArrayList<Database.SMS> ret = new ArrayList<Database.SMS>();
-        Date from = (Date) date.clone();
-        Date to = (Date) date.clone();
-        if (to.getMonth() < 12)
-            to = new Date(to.getYear(), to.getMonth() + 1, 1);
-        else
-            to = new Date(to.getYear() + 1, 1, 1);
-        for (int i = 0; i < smsList.size(); i++) {
-            if (from.compareTo(smsList.get(i).date) <= 0 && to.compareTo(smsList.get(i).date) > 0)
-                ret.add(smsList.get(i));
+        if (date != null) {
+            Date from = (Date) date.clone();
+            Date to = (Date) date.clone();
+            if (to.getMonth() < 12)
+                to = new Date(to.getYear(), to.getMonth() + 1, 1);
+            else
+                to = new Date(to.getYear() + 1, 1, 1);
+            String s = to.toString();
+            s = from.toString();
+            for (int i = 0; i < smsList.size(); i++) {
+                if (smsList.get(i).date != null) {
+                    if (from.compareTo(smsList.get(i).date) <= 0 && to.compareTo(smsList.get(i).date) > 0)
+                        ret.add(smsList.get(i));
+                }
+            }
         }
         return ret;
     }
@@ -70,17 +80,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() { // "просыпаемся"
         super.onResume();
-
-        smsList.clear();
-        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
-        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
-            readSMS();
-            poluchatFragment.updateView();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS},
-                    REQUEST_READ_SMS);
+        if (onCreateCalled) {
+            smsList.clear();
+            int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
+            if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+                readSMS();
+            }
         }
     }
+
+/*
+    @Override
+    public void onStart() {
+    }
+*/
+
 
     //42201f8561511aed9f538eba26947d43f9788102ca72f3c7
     @Override
@@ -89,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (database == null)
-            database = new Database (this);
+            database = new Database(this);
 
         String appKey = "42201f8561511aed9f538eba26947d43f9788102ca72f3c7";
         Appodeal.disableLocationPermissionCheck();
@@ -124,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 //            database = new Database(this);
 
         smsList.clear();
+
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
         if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
             readSMS();
@@ -131,8 +146,10 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS},
                     REQUEST_READ_SMS);
         }
+
         poluchatFragment = PoluchatFragment.newInstance();
         getSupportFragmentManager().beginTransaction().addToBackStack("").replace(R.id.fragmentHost, poluchatFragment, "").commit();
+        onCreateCalled = true;
     }
 
     @Override
@@ -208,8 +225,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        switch (id)
-        {
+        switch (id) {
             case R.id.item_all:
                 poluchatFragment.mode = 3;
                 poluchatFragment.updateView();
@@ -219,7 +235,10 @@ public class MainActivity extends AppCompatActivity {
                 poluchatFragment.updateView();
                 break;
             case R.id.item_about:
-                showAbout ();
+                showAbout();
+                break;
+            case R.id.item_help:
+                showHelp();
                 break;
         }
 
@@ -320,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TableLayout table = dialog.findViewById(R.id.table_comments ); // init table
+        TableLayout table = dialog.findViewById(R.id.table_comments); // init table
         if (table != null) {
             table.removeAllViews();
             table.invalidate();
@@ -339,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
             if (comments.size() == 0) {
                 TextView tv = dialog.findViewById(R.id.dialogTextView2);
                 if (tv != null)
-                    tv.setText ("");
+                    tv.setText("");
             }
         }
 
@@ -373,4 +392,70 @@ public class MainActivity extends AppCompatActivity {
         builder.create();
         builder.show();
     }
+
+    protected void showHelp() {
+        // Inflate the about message contents
+        View messageView = getLayoutInflater().inflate(R.layout.help, null, false);
+
+//        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        int width = display.getWidth() / 2; // ((display.getWidth()*20)/100)
+        int height = display.getHeight() / 2;// ((display.getHeight()*30)/100)
+        TableRow.LayoutParams parms = new TableRow.LayoutParams(width, height);
+        ImageView iv = messageView.findViewById(R.id.screenshot1);
+        iv.setLayoutParams(parms);
+        iv = messageView.findViewById(R.id.screenshot2);
+        iv.setLayoutParams(parms);
+        iv = messageView.findViewById(R.id.screenshot3);
+        iv.setLayoutParams(parms);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle(R.string.help_header);
+        builder.setView(messageView);
+        builder.create();
+        builder.show();
+    }
+
+    protected void showPreferences () {
+        /*
+                                Intent settingsActivity = new Intent (getBaseContext(),
+                                                Preferences.class);
+                                startActivity (settingsActivity);
+                        }
+                        
+                        private void getPrefs() {
+                        boolean CheckboxPreference;
+        String ListPreference;
+        String editTextPreference;
+        String ringtonePreference;
+        String secondEditTextPreference;
+        String customPref;
+                        
+                // Get the xml/preferences.xml preferences
+                SharedPreferences prefs = PreferenceManager
+                                .getDefaultSharedPreferences(getBaseContext());
+                CheckboxPreference = prefs.getBoolean("checkboxPref", true);
+                ListPreference = prefs.getString("listPref", "nr1");
+                editTextPreference = prefs.getString("editTextPref",
+                                "Nothing has been entered");
+                ringtonePreference = prefs.getString("ringtonePref",
+                                "DEFAULT_RINGTONE_URI");
+                secondEditTextPreference = prefs.getString("SecondEditTextPref",
+                                "Nothing has been entered");
+                // Get the custom preference
+                SharedPreferences mySharedPreferences = getSharedPreferences(
+                                "myCustomSharedPrefs", Activity.MODE_PRIVATE);
+                customPref = mySharedPreferences.getString("myCusomPref", "");
+                */
+        }
+
 }
+
+//todo "translate to "russian""
+
+
+// TODO вы владелец карты Беларусбанка, вы получаете SMS о операциях по карте, вы хотите узнать куда уходят деньги, но вводить в программе учёта каждый, даже самый мелкий, платёж выше Ваших сил? Это приложение для вас.
+// TODO Подарить кофе разработчику. Кофе с шоколадкой. Чай с печеньками.
+
